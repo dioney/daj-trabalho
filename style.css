@@ -1,0 +1,71 @@
+body,
+html {
+  margin: 0;
+}
+html {
+  height: 100%;
+}
+body {
+  height: inherit;
+  overflow: hidden;
+}
+h1,
+p {
+  font-family: sans-serif;
+  text-align: center;
+  padding: 20px;
+}
+
+div {
+  height: 100px;
+  overflow: auto;
+  position: absolute;
+  bottom: 0px;
+  right: 0;
+  left: 0;
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.hints span {
+  text-shadow: 0px 0px 6px rgba(255, 255, 255, 0.7);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+#daj th {
+  text-align: center;
+  font-weight: bold;
+}
+#daj td {
+  height: 100%;
+  white-space: nowrap;
+  text-align: center;
+  vertical-align: bottom;
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+
+#daj .es {
+  background: #999;
+}
+#daj .pr {
+  background: #03f;
+  color: #fff;
+}
+#daj .cl {
+  background: #ff6;
+}
+#daj .bo {
+  background: #ff0;
+}
+#daj .ca {
+  background: #60c;
+  color: #fff;
+}
+#daj .pro {
+  background: red;
+  color: #fff;
+}
