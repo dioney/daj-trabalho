@@ -12,22 +12,40 @@ recognition.maxAlternatives = 1;
 var saida = document.querySelector(".output");
 var arrayClass =  ['es', 'bo','ca','pro','cl','pr'];
 var arrayElemento = [];
+
 for(var i=0; i < arrayClass.length; i++) {
     var elemento = {};
     elemento.Id = arrayClass[i];
     elemento.Classe = arrayClass[i];
     arrayElemento.push(elemento);
+    var el = document.getElementById(elemento.Id); 
+    el.addEventListener("click", listenerElement, false); 
+
 }
 
-var listener = () => {
- recognition.start();
+var listenerBody = () => {
+recognition.start();
 };
 
-document.body.addEventListener("click", listener);
+
+function listenerElement(event){
+
+  for(let elemento of arrayElemento) {
+    if(elemento.Id == event.target.id && elemento.Classe =='pro'){
+          alert('Elemento vermelho selecionado '+event.target.id);
+    }
+  }
+  event.stopPropagation();
+ };
+
+
+ document.body.addEventListener("click", listenerBody);
+
 
 recognition.addEventListener("speechend", () => {
   recognition.stop();
 });
+
 recognition.addEventListener("error", event => {
   saida.textContent = "Erro no reconhecimento do texto: " + event.error;
 });
@@ -45,14 +63,6 @@ var g_promessa_count = 0;
 
 //1-IMPLEMENTAR..... FUNCAO QUE IRA DISPARAR A ACAO CORRESPONDENTE A PALAVRA
 function disparaEvento(palavra) {
- /* if (palavra =="1") {
-  horario();
-  }
-  if (palavra =="2") {
-    antihorario();
-    }
-    else */
-    
     if (palavra == "escopo") {
       if (g_Controller == false) {
         g_Controller = true;
@@ -67,7 +77,7 @@ function disparaEvento(palavra) {
   } else {
     g_Controller_count++;
     if (g_Controller_count == 2) {
-      document.body.removeEventListener("click", listener);
+      document.body.removeEventListener("click", listenerBody);
       console.log("bloqueado");
     }
     console.log(palavra);
@@ -91,6 +101,15 @@ function promessa(palavra) {
 //4 -INCLUIR OS EVENTOS DE CLICK NOS ELEMENTOS <TD> E <TR> DA PAGINA
 function click() {
   console.log("CLICK!!");
+
+  for(let elemento of arrayElemento) {
+    if(elemento.Classe =='pro'){
+      var elementoEncontrado = document.getElementById(elemento.Id);
+      var event = new MouseEvent("click");
+      elementoEncontrado.dispatchEvent(event);
+    }
+  }
+
 }
 function resolverPromessa(){
   if(g_promessa_count % 2 === 0){

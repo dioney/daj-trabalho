@@ -34,8 +34,7 @@ table {
   width: 100%;
   border-collapse: collapse;
 }
-
-#daj th {
+#daj th { 
   text-align: center;
   font-weight: bold;
 }
