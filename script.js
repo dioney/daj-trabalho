@@ -10,13 +10,17 @@ recognition.interimResults = false;
 recognition.maxAlternatives = 1;
 
 var saida = document.querySelector(".output");
-
-// document.body.addEventListener("click", () => {
-//   recognition.start();
-// });
+var arrayClass =  ['es', 'bo','ca','pro','cl','pr'];
+var arrayElemento = [];
+for(var i=0; i < arrayClass.length; i++) {
+    var elemento = {};
+    elemento.Id = arrayClass[i];
+    elemento.Classe = arrayClass[i];
+    arrayElemento.push(elemento);
+}
 
 var listener = () => {
-  recognition.start();
+ recognition.start();
 };
 
 document.body.addEventListener("click", listener);
@@ -37,13 +41,22 @@ recognition.onresult = function(event) {
 
 var g_Controller = false;
 var g_Controller_count = 0;
+var g_promessa_count = 0;
 
 //1-IMPLEMENTAR..... FUNCAO QUE IRA DISPARAR A ACAO CORRESPONDENTE A PALAVRA
 function disparaEvento(palavra) {
-  if (palavra == "escopo") {
-    if (g_Controller == false) {
-      g_Controller = true;
-    } else {
+ /* if (palavra =="1") {
+  horario();
+  }
+  if (palavra =="2") {
+    antihorario();
+    }
+    else */
+    
+    if (palavra == "escopo") {
+      if (g_Controller == false) {
+        g_Controller = true;
+      } else {
       g_Controller = false;
     }
     console.log(g_Controller);
@@ -57,26 +70,19 @@ function disparaEvento(palavra) {
       document.body.removeEventListener("click", listener);
       console.log("bloqueado");
     }
-
     console.log(palavra);
     console.log(g_Controller_count);
   }
-
-  //   promessa(palavra);
-  //   if (!isNaN(palavra)) {
-  //     if (parseInt(palavra) % 2 === 0) {
-  //       horario();
-  //     } else {
-  //       antihorario();
-  //     }
-  //   }
 }
 
 //2-IMPLEMENTAR FUNCAO DA PROMESSA
 function promessa(palavra) {
   let p = new Promise((resolve, reject) => {
     setTimeout(() => {
-      if (g_Controller == true) resolve();
+      if (g_Controller == true) {
+        g_promessa_count++;
+        resolve(resolverPromessa());
+      }
       if (g_Controller == false) reject(alert("Houve rejeição da PROMESSA"));
     }, 4000);
   });
@@ -86,11 +92,55 @@ function promessa(palavra) {
 function click() {
   console.log("CLICK!!");
 }
+function resolverPromessa(){
+  if(g_promessa_count % 2 === 0){
+    horario();
+  }
+  else{
+    antihorario();
+  }
+}
 //5 -METODO PARA ALTERAR O BACKGROUND DAS CELULAS
 function horario() {
   console.log("HORÁRIO");
+  //es bo ca pro cl pr
+  for(var i=0; i < arrayElemento.length; i++) {
+    
+    var elemento = arrayElemento[i];
+    var novaClasse = alterarBackGround(elemento.Id, elemento.Classe, true);
+    arrayElemento[i].Classe = novaClasse;
+  }
 }
 
 function antihorario() {
   console.log("ANTIHORÁRIO");
+  for(var i=0; i < arrayElemento.length; i++) {
+    
+    var elemento = arrayElemento[i];
+    var novaClasse = alterarBackGround(elemento.Id, elemento.Classe, false);
+    arrayElemento[i].Classe = novaClasse;
+  }
+}
+
+function alterarBackGround(elemento, classe, isHorario)
+{
+  var novaClasse = classe;
+  document.getElementById(elemento).classList.remove(classe);
+  var idArray = arrayClass.indexOf(classe);
+  if(isHorario){
+    idArray++;
+  }
+  else{
+    idArray--;
+  }
+
+  if(idArray < 0){
+    idArray = 5;
+  }
+  else if(idArray >5){
+    idArray = 0;
+  }
+  novaClasse = arrayClass[idArray];
+  document.getElementById(elemento).classList.add(novaClasse);
+  return novaClasse;
 }
