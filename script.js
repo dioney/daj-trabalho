@@ -100,7 +100,7 @@ function resolverPromessa(){
     antihorario();
   }
 }
-//5 -METODO PARA ALTERAR O BACKGROUND DAS CELULAS
+//5 -METODO PARA ALTERAR O BACKGROUND DAS CELULAS AAA
 function horario() {
   console.log("HORÁRIO");
   //es bo ca pro cl pr
